@@ -7,6 +7,7 @@ walk, it gets a test here before the fix is merged.
 from __future__ import annotations
 
 import datetime as dt
+from pathlib import Path
 
 import pytest
 
@@ -174,3 +175,68 @@ def test_offer_reported_as_cut() -> None:
     )
     cuts = make_anchor(anchor_id="LAY-002", lane="LAY", metric="Announced job cuts")
     assert offer.metric != cuts.metric and offer.anchor_id != cuts.anchor_id
+
+
+def test_september_revision_ripples_through_ingest(tmp_path: Path) -> None:
+    """September payrolls were cited at +29,000; October's release revised them to +60,000.
+    Ingesting the walk must bump the value version, put the page's citation Behind and flag
+    the estimate built on it, end to end through the command line."""
+    from typer.testing import CliRunner
+
+    from gsps.cli import app
+    from gsps.model.records import ANCHOR_COLUMNS
+    from gsps.store.csv_io import write_rows
+
+    lib = tmp_path / "lib"
+    (lib / "CITATION_MAP").mkdir(parents=True)
+    sep = make_anchor(anchor_id="LAB-012", value="+29,000", as_of="2026-09").as_row()
+    avg = make_anchor(
+        anchor_id="EST-001",
+        lane="EST",
+        anchor_type="estimate",
+        value="+81,000",
+        series_or_table="(LAB-010 + LAB-012) / 2",
+        grade="Hypothesis",
+        authority_tier="internal",
+        nature="derived-estimate",
+    ).as_row()
+    aug = make_anchor(anchor_id="LAB-010", value="+133,000", as_of="2026-08").as_row()
+    write_rows(lib / "ANCHORS_20261003.csv", [aug, sep, avg], ANCHOR_COLUMNS)
+    write_rows(
+        lib / "CITATION_MAP" / "CITATION_MAP_20261003.csv",
+        [
+            {
+                "deliverable_id": "DEL-1",
+                "deliverable_version": "v1",
+                "anchor_id": "LAB-012",
+                "anchor_value_version": "v1",
+                "location": "P1",
+            }
+        ],
+        ["deliverable_id", "deliverable_version", "anchor_id", "anchor_value_version", "location"],
+    )
+    walks = tmp_path / "walks.csv"
+    write_rows(
+        walks,
+        [
+            {
+                "anchor_id": "LAB-012",
+                "value_1": "+60,000",
+                "value_2": "+60,000",
+                "as_of": "2026-09",
+                "verbatim": "from +29,000 to +60,000",
+                "url": "https://www.bls.gov/news.release/empsit.nr0.htm",
+                "gate": "paste",
+                "walked_on": "2026-11-07",
+            }
+        ],
+        ["anchor_id", "value_1", "value_2", "as_of", "verbatim", "url", "gate", "walked_on"],
+    )
+    result = CliRunner().invoke(
+        app, ["ingest", "-l", str(lib), "--walks", str(walks), "--on", "2026-11-12"]
+    )
+    assert result.exit_code == 0, result.output
+    assert "revised      LAB-012   LAB-012 v1->v2: +29,000 -> +60,000" in result.output
+    assert "estimates/anchors: EST-001" in result.output
+    assert "citation DEL-1 v1 P1: cites v1, now Behind" in result.output
+    assert (lib / "ANCHORS_20261112.csv").exists() and (lib / "ANCHORS_20261003.csv").exists()

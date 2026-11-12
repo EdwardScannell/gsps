@@ -17,10 +17,12 @@ from gsps.model.records import Token
 from gsps.requirements.brief import load_brief
 from gsps.requirements.business_case import load_claims, validate_routing
 from gsps.rules.estimates import recompute
+from gsps.rules.freshness import sync_status
 from gsps.rules.integrity import run_integrity_checks
 from gsps.store.csv_io import load_records
 from gsps.views.build import build_views, write_views
 from gsps.walk.gates import paste_block
+from gsps.walk.ingest import Outcome, ingest, load_walks
 from gsps.walk.run import WalkRun
 from gsps.walk.ship import ship_check
 from gsps.walk.track1 import load_track1, validate_track1
@@ -151,6 +153,48 @@ def impact(
     typer.echo(f"anchors:      {', '.join(sorted(imp.anchors)) or '-'}")
     typer.echo(f"tokens:       {', '.join(sorted(imp.tokens)) or '-'}")
     typer.echo(f"deliverables: {', '.join(sorted(imp.deliverables)) or '-'}")
+
+
+@app.command("ingest")
+def ingest_cmd(
+    library: LibraryOpt,
+    walks: Annotated[Path, typer.Option(help="CSV of walked values (see docs).")],
+    on: Annotated[str | None, typer.Option(help="Date of the new version, YYYY-MM-DD.")] = None,
+    tokens: Annotated[
+        Path | None, typer.Option(help="Token registry, to report tokens hit.")
+    ] = None,
+) -> None:
+    """Record walked values as a new dated anchors version, then report the ripple."""
+    lib = Library.load(library)
+    day = _date(on) or dt.date.today()
+    result = ingest(library, load_walks(walks), lib.anchors, on=day, registry=lib.registry)
+
+    for ln in result.lines:
+        typer.echo(f"{ln.outcome.value:<12} {ln.anchor_id:<9} {ln.detail}")
+    if result.anchors_path:
+        typer.echo(f"\nwrote {result.anchors_path}")
+    typer.echo(f"wrote {result.walk_log_path}")
+    for y in result.yields:
+        typer.echo(f"YIELD {y}")
+
+    changes = result.value_changes
+    if changes:
+        typer.echo("\nRipple (value moved, so everything downstream is flagged):")
+        toks = load_records(tokens, Token) if tokens else []
+        by_id = {a.anchor_id: a for a in result.anchors}
+        for imp in result.impacts(lib.citations, toks):
+            typer.echo(f"  {imp.source}:")
+            typer.echo(f"    estimates/anchors: {', '.join(sorted(imp.anchors)) or '-'}")
+            typer.echo(f"    tokens:            {', '.join(sorted(imp.tokens)) or '-'}")
+            typer.echo(f"    deliverables:      {', '.join(sorted(imp.deliverables)) or '-'}")
+            for c in lib.citations:
+                if c.anchor_id == imp.source:
+                    status = sync_status(c, by_id, day).value
+                    typer.echo(
+                        f"    citation {c.deliverable_id} {c.deliverable_version} "
+                        f"{c.location}: cites {c.anchor_value_version}, now {status}"
+                    )
+    raise typer.Exit(1 if any(ln.outcome == Outcome.REFUSED for ln in result.lines) else 0)
 
 
 @app.command("recompute")

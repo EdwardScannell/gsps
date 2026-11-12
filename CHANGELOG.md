@@ -7,6 +7,9 @@ All notable changes are recorded here. The format follows
 ## [Unreleased]
 
 ### Added
+- `gsps ingest`: record walked values (gate, two extractions, verbatim) as a new dated
+  anchors version and a walk log; revisions and new releases bump `value_version` and
+  report the full downstream ripple. See `docs/ingest.md`.
 - `ROADMAP.md`; README sections "Who it's for", "Built with" and "Roadmap".
 - `.env` and key-file patterns in `.gitignore`; `.env.example` placeholder.
 

@@ -76,6 +76,9 @@ gsps ship-check --claims examples/onepager_walk/claims.csv \
 # Views over a library (status, staleness, punch list, integrity, vocabulary yields)
 gsps views --library tests/fixtures/library --as-of 2026-11-15 --dry
 
+# Record walked values as a new library version, and see the ripple
+gsps ingest --library path/to/library --walks walks.csv   # see docs/ingest.md
+
 # What moves when one input moves?
 gsps impact --library tests/fixtures/library --anchor PRC-001
 
