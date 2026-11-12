@@ -240,3 +240,25 @@ def test_september_revision_ripples_through_ingest(tmp_path: Path) -> None:
     assert "estimates/anchors: EST-001" in result.output
     assert "citation DEL-1 v1 P1: cites v1, now Behind" in result.output
     assert (lib / "ANCHORS_20261112.csv").exists() and (lib / "ANCHORS_20261003.csv").exists()
+
+
+def test_blank_csv_cell_turned_every_walk_into_a_lead() -> None:
+    """The first live ingest refused every walk as 'a lead': a blank is_owner_primary cell was
+    parsed as false. A blank cell means the default; only an explicit 'false' marks a lead."""
+    from gsps.walk.ingest import WalkedValue
+
+    base = {
+        "anchor_id": "LAB-001",
+        "value_1": "1",
+        "value_2": "1",
+        "verbatim": "v",
+        "url": "https://owner.example",
+        "gate": "paste",
+        "walked_on": "2026-11-07",
+    }
+    blank = WalkedValue.model_validate({**base, "is_owner_primary": "", "human_walk": ""})
+    assert blank.is_owner_primary is True and blank.human_walk is False
+    lead = WalkedValue.model_validate({**base, "is_owner_primary": "false"})
+    assert lead.is_owner_primary is False
+    with pytest.raises(ValueError):
+        WalkedValue.model_validate({**base, "is_owner_primary": "maybe"})

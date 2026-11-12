@@ -28,7 +28,7 @@ from dataclasses import dataclass, field
 from enum import StrEnum
 from pathlib import Path
 
-from pydantic import BaseModel, ConfigDict, field_validator
+from pydantic import BaseModel, ConfigDict, ValidationInfo, field_validator
 
 from gsps.cascade.graph import DependencyGraph, Impact
 from gsps.model.records import ANCHOR_COLUMNS, Anchor, Citation, Token
@@ -120,9 +120,18 @@ class WalkedValue(BaseModel):
 
     @field_validator("human_walk", "is_owner_primary", mode="before")
     @classmethod
-    def _bool(cls, v: object) -> object:
+    def _bool(cls, v: object, info: ValidationInfo) -> object:
+        """Parse CSV booleans. A blank cell means the field's default, never ``false``:
+        an empty cell must not silently turn a primary walk into a lead."""
         if isinstance(v, str):
-            return v.strip().lower() in {"1", "true", "yes", "y"}
+            s = v.strip().lower()
+            if not s:
+                return info.field_name == "is_owner_primary"
+            if s in {"1", "true", "yes", "y"}:
+                return True
+            if s in {"0", "false", "no", "n"}:
+                return False
+            raise ValueError(f"not a boolean: {v!r}")
         return v
 
 
