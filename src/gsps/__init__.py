@@ -7,4 +7,4 @@ The engine enforces the rules. It does not fetch, search or browse: walking a
 page is done by a person or an agent, and the engine receives what was walked.
 """
 
-__version__ = "0.1.0"
+__version__ = "0.2.0"

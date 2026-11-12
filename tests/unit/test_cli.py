@@ -20,7 +20,7 @@ def run(*args: str) -> tuple[int, str]:
 
 
 def test_version() -> None:
-    assert run("version") == (0, "0.1.0\n")
+    assert run("version") == (0, "0.2.0\n")
 
 
 def test_views_dry_and_write(tmp_path: Path) -> None:

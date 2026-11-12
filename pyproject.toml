@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "gsps"
-version = "0.1.0"
+version = "0.2.0"
 description = "GSPS: a provenance engine for external facts. Every figure walks to its owner's primary source and ships with its receipts."
 readme = "README.md"
 license = "Apache-2.0"
