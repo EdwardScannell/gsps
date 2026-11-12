@@ -1,0 +1,2 @@
+flag_id,token,anchors,flag_type,status,phrasing_rule
+TN-001,T03,LAY-002; AID-004,narrative vs evidence,open,"say 'employers cited AI', never 'AI caused'"

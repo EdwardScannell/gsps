@@ -21,6 +21,6 @@ htmlcov/
 .DS_Store
 
 # Never commit a live library or walk runs: point the tool at them instead.
-library/
-runs/
+/library/
+/runs/
 *.local.csv

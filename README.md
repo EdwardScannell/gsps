@@ -8,7 +8,7 @@ GSPS is for anyone who publishes numbers they did not produce: pitch decks, rese
 notes, policy briefs, market sizing, data rooms. It turns the discipline of a careful
 fact-checker into rules a machine enforces.
 
-[![CI](https://github.com/OWNER/gsps/actions/workflows/ci.yml/badge.svg)](https://github.com/OWNER/gsps/actions/workflows/ci.yml)
+[![CI](https://github.com/EdwardScannell/gsps/actions/workflows/ci.yml/badge.svg)](https://github.com/EdwardScannell/gsps/actions/workflows/ci.yml)
 ![Python](https://img.shields.io/badge/python-3.11%2B-blue)
 ![License](https://img.shields.io/badge/license-Apache--2.0-green)
 
