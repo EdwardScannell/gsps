@@ -1,0 +1,8 @@
+token_id,section,value,depends_on,class_override,check,expected_text,locator,route,reason,range,as_of_override,visual_status,status,note
+T01,problem,"+165,000",LAB-011@v1,,,"165,000 new jobs","\d{3},\d{3} new jobs",,headline payrolls,,,,,
+T02,problem,"+29,000",LAB-012@v1,,,"29,000 in September","[\d,]+ in September",,"prior month, since revised",,,,,
+T03,problem,"43,994",LAY-002@v1,,,"43,994 announced cuts","[\d,]+ announced cuts",,layoffs headline,,,,,
+T04,market,$2.34B,EST-001@v1,,,$2.34B (our estimate),\$[\d.]+B \(our estimate\),ASM-001 * PRC-001 * 12,full-market revenue,$1.9B / $2.34B / $2.8B,,,,
+T05,proof,credential surfaced,,attested,,surfaced in a single conversation,surfaced in a single conversation,,internal case,,,,,
+T06,hero image,diagram,,,visual,,,,diagram labels a capability not yet shown,,,dirty,,
+T07,retired,old line,LAB-012@v1,,,,,,not on this version,,,,retired,

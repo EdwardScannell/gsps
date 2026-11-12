@@ -1,0 +1,12 @@
+claim_id,text,kind,track,on_page,location,question_ids,anchors
+C01,The jobs number prints green: October added 165000 jobs,fact,T1,true,P2,Q1,LAB-011
+C02,The average time out of work rose to 27.1 weeks,fact,T1,true,P2,Q2,
+C03,Layoffs are low: 43994 announced cuts,fact,T1,true,P2,Q1;Q3,LAY-002
+C04,We're the only one that submits only what you approved,absence,T1,true,P3,,
+C05,the dozen tools,count,T1,true,P3,,
+C06,a credential invisible across 100+ applications,internal,T1-INT,true,P4,,
+C07,it auto-applies,internal,T1-INT,true,P4,,
+C08,The market is everyone with a career,narrative,T2,true,P5,,
+C09,We can safely sell this data,legal,T2,true,P5,,
+C10,A blank where twenty years should be,illustrative,T2,true,P1,,
+C11,A lifetime home for your career,narrative,T2,true,P5,,

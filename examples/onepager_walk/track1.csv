@@ -1,0 +1,8 @@
+claim_id,verdict,url,gate,walked_by,human_walk,verbatim,grade,ceiling,is_lead,attested_by,note
+C01,CONFIRMED,https://www.bls.gov/news.release/empsit.nr0.htm,paste,agent,false,Total nonfarm payroll employment rose by 165000 in October,Confirmed,none,false,,BLS USDL-26-1632
+C02,CONFIRMED,https://www.bls.gov/news.release/empsit.t12.htm,paste,agent,false,Average (mean) duration in weeks: 27.1 (Oct 2026 SA; Sep 24.8),Confirmed,none,false,,Table A-12
+C03,CONFIRMED,https://www.challengergray.com/wp-content/uploads/2026/11/Challenger-Report-October-2026.pdf,chained,agent,false,U.S.-based employers announced 43994 job cuts in October,Confirmed,none,false,,company-research: name the source on the page
+C04,WRONG,https://example.com/exampleapply/faq,click,agent,false,Review Mode: every application waits for your approval before it is sent.,Confirmed,none,false,,FICTIONAL competitor page for this example
+C05,UNVERIFIABLE,,,,false,,,structural,false,,8 products named on walked pages; 'a dozen' is not supported; say 'the crowd'
+C06,UNVERIFIABLE,,,,false,,,access,false,,application tracker not reachable in this walk; count needs the record or an attestation
+C07,ATTESTED,,,,false,,,none,false,ratifier,first-hand attestation of the capability

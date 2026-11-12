@@ -1,0 +1,24 @@
+# A walk brief: requirements, not sources. The keeper finds the evidence.
+id: BRIEF-EXAMPLE-001
+requester: requester
+date: 2026-11-07
+supersedes: []
+blind: true          # named claims in earlier hand-offs are not leads
+inputs:
+  - path: page.md
+    role: page
+questions:
+  - id: Q1
+    text: Overall employment environment now (direction, momentum).
+  - id: Q2
+    text: The environment for job seekers (applications per job, time to hire, ghosting).
+  - id: Q3
+    text: Where cuts and freezes concentrate, by sector and seniority.
+  - id: Q4
+    text: Is AI a cause of cuts or hiring freezes?
+  - id: Q5
+    text: The trust and safety climate in hiring (scams, fake postings).
+scope:
+  in: [page claims, qualitative questions]
+  held: [unit economics]
+output: [track1_log, track2_register, qualitative_findings]
