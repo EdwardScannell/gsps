@@ -28,3 +28,4 @@ Each operating rule, the code that enforces it, and the test that proves it.
 | 22 | A frozen run cannot change silently | `walk.run.WalkRun.freeze/verify` | `test_run_numbering_freeze_and_verify` |
 | 23 | No token ships bare; estimates carry route and band; dirty blocks release | `requirements.shopping.validate_report` | `test_requirements.py` |
 | 24 | A walk enters only cleared, twice-extracted and from the owner; a moved value bumps value_version and ripples | `walk.ingest.apply_walks` | `test_ingest.py`, `test_september_revision_ripples_through_ingest` |
+| 25 | An estimate whose inputs moved after it was computed is stale, all the way down the chain | `cascade.derived.estimates_with_moved_inputs`, fill report, views punch list | `test_derived.py`, `test_live_walk_ripple` |

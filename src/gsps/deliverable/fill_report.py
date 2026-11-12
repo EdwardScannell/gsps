@@ -23,6 +23,7 @@ from collections.abc import Iterable, Mapping
 
 from pydantic import BaseModel, ConfigDict
 
+from gsps.cascade.derived import estimates_with_moved_inputs
 from gsps.cascade.graph import DependencyGraph
 from gsps.deliverable.text import normalize_page
 from gsps.model.records import Anchor, Token
@@ -82,6 +83,7 @@ def build_fill_report(
     ratifier: str = "ratifier",
 ) -> list[FillRow]:
     text = normalize_page(page_text)
+    stale = estimates_with_moved_inputs(anchors.values())
     rows: list[FillRow] = []
     for t in tokens:
         if t.status == "retired":
@@ -96,6 +98,8 @@ def build_fill_report(
             direct.append(a)
             if pinned and a.value_version != pinned:
                 upstream.append(f"{aid} {pinned}->{a.value_version}")
+            if aid in stale:
+                upstream.append(f"{aid} inputs moved ({', '.join(stale[aid])}); recompute")
 
         cls = _classify(t, direct, keeper)
         g = weakest_grade(a.grade for a in direct)

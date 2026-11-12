@@ -12,6 +12,7 @@ import datetime as dt
 from collections import defaultdict
 from pathlib import Path
 
+from gsps.cascade.derived import estimates_with_moved_inputs
 from gsps.library import Library
 from gsps.rules.confidence import confidence
 from gsps.rules.freshness import is_stale, sync_status, worst_status
@@ -123,6 +124,8 @@ def build_views(lib: Library, as_of: dt.date, *, simulated: bool = False) -> str
                 f"| {a.anchor_id} | classify the source kind "
                 "(3rd-party-unknown is a holding label) |"
             )
+    for est, moved in estimates_with_moved_inputs(anchors).items():
+        p(f"| {est} | recompute: inputs moved since it was computed ({', '.join(moved)}) |")
     for f in lib.findings.values():
         if "pending" in f.counterweight_status:
             p(f"| {f.anchor_id} | counterweight {f.counterweight_status} |")

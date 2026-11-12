@@ -41,7 +41,7 @@ Status: **Done** (implemented and tested), **Partial**, **Planned**.
 | F01-F03 | Refresh fields; value vs record version; citation states and rollup | `rules.freshness`, `views` | Done |
 | F04 | Re-walk queue when next_release passes | views section 5 (STALE) | Partial (queue file planned) |
 | F05 | Noticing never ripples; re-render only on request | engine never edits deliverables | Done |
-| F06 | Full dependency cascade | `cascade.graph` | Done |
+| F06 | Full dependency cascade, including estimates whose inputs moved | `cascade.graph`, `cascade.derived` | Done |
 | D01-D04 | Token registry; wording tokens; fill report; dirty detection | `deliverable` | Done |
 | D05 | Fixes returned as a tracked-changes redline | out of scope for 0.1 | Planned |
 | D06-D08 | Provenance stamp as a token; attestations held; estimates labeled | tokens, `walk.ship` | Done |
