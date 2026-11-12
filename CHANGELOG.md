@@ -18,6 +18,8 @@ All notable changes are recorded here. The format follows
 - `examples/live_walk/`: the October 2026 jobs-report revisions ingested into an October 3
   library, with a reproducible `run.sh`, a recorded `RUN_LOG.md`, and a CI step.
 
+- `gsps qual-summary`: per-question stance counts, documentary sources, lean and flags.
+
 ### Fixed
 - A blank boolean cell in a walks file was read as false, refusing every walk as a lead.
 - Test fixtures were excluded by an unanchored `library/` ignore pattern (CI on a clean clone).

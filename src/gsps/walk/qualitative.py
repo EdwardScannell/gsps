@@ -12,10 +12,12 @@ from __future__ import annotations
 
 from collections import Counter
 from collections.abc import Iterable
+from pathlib import Path
 
 from pydantic import BaseModel, ConfigDict
 
 from gsps.rules.grading import is_documentary
+from gsps.store.csv_io import read_rows
 from gsps.vocab.values import AuthorityTier, Stance
 
 _INTERESTED = {
@@ -39,6 +41,8 @@ class QualSource(BaseModel):
     grade: str
     authority_tier: str = ""
     url: str = ""
+    gate: str = ""
+    walked_on: str = ""
 
 
 class QuestionSummary(BaseModel):
@@ -60,6 +64,28 @@ class QuestionSummary(BaseModel):
         if s:
             return "supports"
         return "complicates" if self.sources else "no evidence"
+
+
+def load_sources(path: str | Path) -> list[QualSource]:
+    return [QualSource.model_validate(row) for row in read_rows(path)]
+
+
+def render_summaries(sources: Iterable[QualSource], *, min_documentary: int = 2) -> str:
+    items = list(sources)
+    qids = sorted({s.question_id for s in items})
+    out = [
+        "| Question | Sources | Supports | Contradicts | Complicates | Documentary "
+        "| Lean | Flags |",
+        "|---|---|---|---|---|---|---|---|",
+    ]
+    for q in qids:
+        s = summarize_question(q, items, min_documentary=min_documentary)
+        out.append(
+            f"| {q} | {s.sources} | {s.stances.get('supports', 0)} | "
+            f"{s.stances.get('contradicts', 0)} | {s.stances.get('complicates', 0)} | "
+            f"{s.documentary} | {s.lean} | {', '.join(s.flags) or '-'} |"
+        )
+    return "\n".join(out)
 
 
 def summarize_question(

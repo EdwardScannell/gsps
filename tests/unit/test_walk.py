@@ -136,3 +136,26 @@ def test_run_numbering_freeze_and_verify(tmp_path: Path) -> None:
     problems = r1.verify()
     assert "changed: LOG.md" in problems and "added after freeze: SNEAK.md" in problems
     assert r2.verify() == ["not frozen"]
+
+
+def test_render_summaries_and_load_sources(tmp_path: Path) -> None:
+    from gsps.store.csv_io import write_rows
+    from gsps.walk.qualitative import load_sources, render_summaries
+
+    p = write_rows(
+        tmp_path / "q.csv",
+        [
+            {
+                "question_id": "Q1",
+                "source_id": "a",
+                "title": "t",
+                "publisher": "p",
+                "stance": "supports",
+                "grade": "Confirmed",
+                "authority_tier": "government",
+            }
+        ],
+        ["question_id", "source_id", "title", "publisher", "stance", "grade", "authority_tier"],
+    )
+    table = render_summaries(load_sources(p))
+    assert "| Q1 | 1 | 1 | 0 | 0 | 1 | supports | thin |" in table

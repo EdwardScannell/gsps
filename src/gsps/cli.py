@@ -23,6 +23,7 @@ from gsps.store.csv_io import load_records
 from gsps.views.build import build_views, write_views
 from gsps.walk.gates import paste_block
 from gsps.walk.ingest import Outcome, ingest, load_walks
+from gsps.walk.qualitative import load_sources, render_summaries
 from gsps.walk.run import WalkRun
 from gsps.walk.ship import ship_check
 from gsps.walk.track1 import load_track1, validate_track1
@@ -195,6 +196,18 @@ def ingest_cmd(
                         f"{c.location}: cites {c.anchor_value_version}, now {status}"
                     )
     raise typer.Exit(1 if any(ln.outcome == Outcome.REFUSED for ln in result.lines) else 0)
+
+
+@app.command("qual-summary")
+def qual_summary(
+    sources: Annotated[Path, typer.Option(help="CSV of qualitative sources.")],
+    question: Annotated[str | None, typer.Option(help="Only this question ID.")] = None,
+    min_documentary: Annotated[int, typer.Option(help="Below this, a question is 'thin'.")] = 2,
+) -> None:
+    """Per question: stance counts, documentary sources, lean, and thin / contrary /
+    vendor-heavy flags. Thin or contrary evidence is a finding, not a failure."""
+    items = [s for s in load_sources(sources) if question is None or s.question_id == question]
+    typer.echo(render_summaries(items, min_documentary=min_documentary))
 
 
 @app.command("recompute")

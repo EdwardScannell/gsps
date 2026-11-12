@@ -173,3 +173,12 @@ def test_library_from_environment(monkeypatch: pytest.MonkeyPatch) -> None:
     monkeypatch.setenv("GSPS_LIBRARY", LIB)
     code, out = run("views", "--as-of", "2026-11-15", "--dry")
     assert code == 0 and "SIMULATED DATE" in out
+
+
+def test_qual_summary() -> None:
+    code, out = run("qual-summary", "--sources", str(EXAMPLE / "qualitative.csv"))
+    assert code == 0 and "| Q4 | 5 | 1 | 3 | 1 | 4 | mixed | contrary |" in out
+    code, out = run(
+        "qual-summary", "--sources", str(EXAMPLE / "qualitative.csv"), "--question", "Q9"
+    )
+    assert code == 0 and "| Q4 |" not in out

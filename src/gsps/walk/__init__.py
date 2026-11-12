@@ -2,7 +2,13 @@
 web gates and the ship gate."""
 
 from gsps.walk.gates import FailedFetch, FollowupItem, paste_block, render_followup
-from gsps.walk.qualitative import QualSource, QuestionSummary, summarize_question
+from gsps.walk.qualitative import (
+    QualSource,
+    QuestionSummary,
+    load_sources,
+    render_summaries,
+    summarize_question,
+)
 from gsps.walk.run import WalkRun
 from gsps.walk.ship import ShipReport, ship_check
 from gsps.walk.track1 import Track1Entry, load_track1, validate_track1
@@ -18,10 +24,12 @@ __all__ = [
     "ShipReport",
     "Track1Entry",
     "WalkRun",
+    "load_sources",
     "load_track1",
     "load_track2",
     "paste_block",
     "render_followup",
+    "render_summaries",
     "ship_check",
     "summarize_question",
     "validate_track1",
