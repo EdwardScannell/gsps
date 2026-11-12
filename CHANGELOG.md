@@ -19,6 +19,8 @@ All notable changes are recorded here. The format follows
   library, with a reproducible `run.sh`, a recorded `RUN_LOG.md`, and a CI step.
 
 - `gsps qual-summary`: per-question stance counts, documentary sources, lean and flags.
+- Live walk qualitative evidence: Q2 (job seekers) and Q5 (trust and safety) before and
+  after widening the net to government and institute sources; both flags clear.
 
 ### Fixed
 - A blank boolean cell in a walks file was read as false, refusing every walk as a lead.

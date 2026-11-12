@@ -60,5 +60,13 @@ echo "## 7. Vocabulary and integrity on the new version"
 step "0 1" gsps vocab-check --library "$LIB"
 
 echo
+echo "## 8. Qualitative evidence before: the November 7 walk (Q2 job seekers, Q5 trust)"
+step "0" gsps qual-summary --sources "$HERE/qualitative_20261107.csv"
+
+echo
+echo "## 9. Qualitative evidence after widening the net (November 12)"
+step "0" gsps qual-summary --sources "$HERE/qualitative_20261112.csv"
+
+echo
 echo "## Files written by the ingest (scratch copy)"
 (cd "$LIB" && find . -type f | sort)

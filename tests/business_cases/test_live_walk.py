@@ -74,3 +74,16 @@ def test_live_walk_ripple(lib: Path) -> None:
         "81,000",
     )
     assert not check.ok and check.recomputed == 123_000
+
+
+def test_wider_net_clears_thin_and_vendor_heavy_flags() -> None:
+    from gsps.walk.qualitative import load_sources, summarize_question
+
+    before = load_sources(LIVE / "qualitative_20261107.csv")
+    after = load_sources(LIVE / "qualitative_20261112.csv")
+    assert set(summarize_question("Q2", before).flags) == {"thin", "vendor-heavy"}
+    assert summarize_question("Q5", before).flags == ("thin",)
+    q2, q5 = summarize_question("Q2", after), summarize_question("Q5", after)
+    assert q2.flags == () and q5.flags == ()
+    assert q2.stances.get("complicates") == 3 and q5.stances.get("complicates") == 1
+    assert all(len(s.verbatim) < 125 and s.url.startswith("https://") for s in after)

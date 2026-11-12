@@ -38,6 +38,14 @@ page that refused automated reading with no human walk recorded.
 5. **Fill report:** T01 dirty (its value moved) and T02 dirty (its inputs moved).
 6. **Recompute:** the stated 81,000 no longer reproduces; the inputs now give 123,000.
 7. **Integrity and vocabulary** on the new version: clean.
+8. **Qualitative, before:** Q2 (job seekers) rested on 5 sources, 4 from hiring-software
+   vendors, only 1 at a documentary grade: flagged *thin* and *vendor-heavy*. Q5 (trust
+   and safety) had 2 sources: *thin*.
+9. **Qualitative, after** widening the net to the NY Fed, Burning Glass Institute, Pew,
+   Indeed Hiring Lab, the FBI's IC3 and the FTC: both flags clear, and the wider net
+   surfaces findings that *complicate* the story (job-finding expectations up, postings
+   above their pre-pandemic level, employment scams about 2% of all complaints). Sources
+   pointing two ways are recorded as two rows, never folded into one stance.
 
 Nothing on the page was edited. Noticing a change never edits a document; the person who
 owns the brief decides whether to re-render it.
@@ -49,5 +57,7 @@ owns the brief decides whether to re-render it.
 | `library/` | The library as of the October 3 walk |
 | `walks_20261107.csv` | The November 7 walk: URL, gate, two extractions, verbatim |
 | `TOKENS.csv`, `page_v1.md` | The brief and the values on it |
+| `qualitative_20261107.csv` | Q2 and Q5 sources from the November 7 walk |
+| `qualitative_20261112.csv` | The same plus 12 findings from the wider net |
 | `run.sh` | The reproducible run |
 | `RUN_LOG.md` | Its recorded output |

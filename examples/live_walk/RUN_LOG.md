@@ -9,12 +9,13 @@ with the same commands; scratch paths are shown as `<scratch>`.
 - **Walk:** the November 7, 2026 walk of public October releases (BLS Employment
   Situation, BLS JOLTS, Challenger), each value extracted twice with its verbatim sentence
   and gate, plus two walks that must be refused.
+- **Qualitative:** Q2 and Q5 sources before and after widening the net (steps 8 and 9).
 
 ## Test suite
 
 ```
-TOTAL                                     1872     33    462     30    97%
-155 passed in 0.96s
+TOTAL                                     1891     33    464     30    97%
+158 passed in 1.32s
 ```
 
 ## Script output
@@ -298,6 +299,24 @@ OK    ceiling: unregistered value (YIELD)
 OK    ceiling: blank (pending ruling, listed not passed)
 OK    refresh_basis: unregistered value (YIELD)
 OK    refresh_basis: blank (pending ruling, listed not passed)
+[exit 0]
+
+## 8. Qualitative evidence before: the November 7 walk (Q2 job seekers, Q5 trust)
+
+$ gsps qual-summary --sources examples/live_walk/qualitative_20261107.csv
+| Question | Sources | Supports | Contradicts | Complicates | Documentary | Lean | Flags |
+|---|---|---|---|---|---|---|---|
+| Q2 | 5 | 5 | 0 | 0 | 1 | supports | thin, vendor-heavy |
+| Q5 | 2 | 2 | 0 | 0 | 1 | supports | thin |
+[exit 0]
+
+## 9. Qualitative evidence after widening the net (November 12)
+
+$ gsps qual-summary --sources examples/live_walk/qualitative_20261112.csv
+| Question | Sources | Supports | Contradicts | Complicates | Documentary | Lean | Flags |
+|---|---|---|---|---|---|---|---|
+| Q2 | 12 | 9 | 0 | 3 | 8 | supports | - |
+| Q5 | 7 | 6 | 0 | 1 | 6 | supports | - |
 [exit 0]
 
 ## Files written by the ingest (scratch copy)
