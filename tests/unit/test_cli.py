@@ -1,5 +1,6 @@
 from pathlib import Path
 
+import pytest
 from typer.testing import CliRunner
 
 from gsps.cli import app
@@ -166,3 +167,9 @@ def test_ship_render_and_t2_branches() -> None:
     assert reasons["F"] == "not registered"
     assert report.render().startswith("SHIP: BLOCKED (5 of 6)")
     assert ship_check([], [], []).render().startswith("SHIP: PASS")
+
+
+def test_library_from_environment(monkeypatch: pytest.MonkeyPatch) -> None:
+    monkeypatch.setenv("GSPS_LIBRARY", LIB)
+    code, out = run("views", "--as-of", "2026-11-15", "--dry")
+    assert code == 0 and "SIMULATED DATE" in out

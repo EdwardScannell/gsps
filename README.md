@@ -38,6 +38,19 @@ receives what was walked (URL, gate, two verbatim extractions) and enforces ever
 from there. That boundary is deliberate: it keeps the engine deterministic, testable and
 safe to run anywhere.
 
+## Who it's for
+
+Analysts, founders, researchers and editors who publish figures they did not produce, and
+the teams who review those documents before they go out. If a number in your deck came
+from somewhere else, GSPS is for you.
+
+## Built with
+
+- **Python 3.11+**, fully typed (`mypy --strict`)
+- **pydantic** for records and contracts, **PyYAML** for briefs, **typer** for the CLI
+- **pytest** with coverage, **ruff** for lint and format, **GitHub Actions** CI on 3.11 to 3.13
+- Plain CSV, markdown and YAML files as the storage format: no database, no network calls
+
 ## Install
 
 ```bash
@@ -129,6 +142,11 @@ tests/
   business_cases/ a requester's brief as an executable ship gate
 examples/onepager_walk/   a complete worked walk
 ```
+
+## Roadmap
+
+The work ahead is in [`ROADMAP.md`](ROADMAP.md), in priority order, and in the
+repository's issues.
 
 ## Development
 

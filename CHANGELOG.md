@@ -4,6 +4,15 @@ All notable changes are recorded here. The format follows
 [Keep a Changelog](https://keepachangelog.com/en/1.1.0/); versions follow
 [Semantic Versioning](https://semver.org/).
 
+## [Unreleased]
+
+### Added
+- `ROADMAP.md`; README sections "Who it's for", "Built with" and "Roadmap".
+- `.env` and key-file patterns in `.gitignore`; `.env.example` placeholder.
+
+### Fixed
+- Test fixtures were excluded by an unanchored `library/` ignore pattern (CI on a clean clone).
+
 ## [0.1.0] - 2026-11-11
 
 First public release.

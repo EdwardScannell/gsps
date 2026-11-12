@@ -33,7 +33,10 @@ app = typer.Typer(
     add_completion=False,
 )
 
-LibraryOpt = Annotated[Path, typer.Option("--library", "-l", help="Library root folder.")]
+LibraryOpt = Annotated[
+    Path,
+    typer.Option("--library", "-l", envvar="GSPS_LIBRARY", help="Library root folder."),
+]
 
 
 def _date(text: str | None) -> dt.date | None:
@@ -86,7 +89,9 @@ def fill_report(
     tokens: Annotated[Path, typer.Option(help="Token registry CSV.")],
     page: Annotated[Path, typer.Option(help="Page text (.txt/.md) or .docx.")],
     doc_version: Annotated[str, typer.Option(help="Version label of the page.")],
-    keeper: Annotated[str, typer.Option(help="Owner name used for our own estimates.")] = "keeper",
+    keeper: Annotated[
+        str, typer.Option(envvar="GSPS_KEEPER", help="Owner name used for our own estimates.")
+    ] = "keeper",
 ) -> None:
     """One row per token: how each value on the page was decided, and what is dirty."""
     lib = Library.load(library)
