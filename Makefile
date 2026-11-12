@@ -1,4 +1,4 @@
-.PHONY: install lint format types test check example clean
+.PHONY: install lint format types test check example live clean
 
 install:
 	python -m pip install -e ".[dev]"
@@ -17,6 +17,9 @@ types:
 
 test:
 	python -m pytest --cov=gsps --cov-report=term-missing --cov-fail-under=90
+
+live:
+	bash examples/live_walk/run.sh
 
 example:
 	gsps validate-walk --claims examples/onepager_walk/claims.csv --track1 examples/onepager_walk/track1.csv

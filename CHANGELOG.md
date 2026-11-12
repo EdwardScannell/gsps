@@ -13,7 +13,13 @@ All notable changes are recorded here. The format follows
 - `ROADMAP.md`; README sections "Who it's for", "Built with" and "Roadmap".
 - `.env` and key-file patterns in `.gitignore`; `.env.example` placeholder.
 
+- Stale-estimate detection: an estimate whose inputs (anywhere up the chain) were revised or
+  re-released after it was computed is flagged in the fill report and the views punch list.
+- `examples/live_walk/`: the October 2026 jobs-report revisions ingested into an October 3
+  library, with a reproducible `run.sh`, a recorded `RUN_LOG.md`, and a CI step.
+
 ### Fixed
+- A blank boolean cell in a walks file was read as false, refusing every walk as a lead.
 - Test fixtures were excluded by an unanchored `library/` ignore pattern (CI on a clean clone).
 
 ## [0.1.0] - 2026-11-11

@@ -1,0 +1,4 @@
+token_id,section,value,depends_on,class_override,check,expected_text,locator,route,reason,range,as_of_override,visual_status,status,note
+T01,P1,"+29,000",LAB-012@v1,,,"added 29,000 jobs in September","added [\d,]+ jobs in September",,September payrolls,,,,,
+T02,P1,"+81,000",EST-001@v1,,,"81,000 a month (our estimate)","[\d,]+ a month \(our estimate\)",(LAB-010 + LAB-012) / 2,two-month average,,,,,
+T03,P1,"+90,000",FCT-001@v1,,,"90,000 economists expected","[\d,]+ economists expected",,"consensus forecast, a projection",,,,,

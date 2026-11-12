@@ -87,6 +87,11 @@ gsps recompute --method "SAM-001 * PRC-001 * 12" --stated '$2.34B' \
                --input SAM-001=5000000 --input PRC-001=39
 ```
 
+A complete, real run is in [`examples/live_walk/`](examples/live_walk/): the October 2026
+jobs report revises two figures a brief relies on, and GSPS follows the change from the walk
+to the page. Its recorded output is in
+[`examples/live_walk/RUN_LOG.md`](examples/live_walk/RUN_LOG.md).
+
 `ship-check`, `validate-walk`, `vocab-check`, `fill-report` and `recompute` exit non-zero
 when something blocks, so they drop straight into CI.
 

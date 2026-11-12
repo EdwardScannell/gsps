@@ -37,3 +37,5 @@ jobs:
         run: |
           gsps validate-walk --claims examples/onepager_walk/claims.csv --track1 examples/onepager_walk/track1.csv
           ! gsps ship-check --claims examples/onepager_walk/claims.csv --track1 examples/onepager_walk/track1.csv --track2 examples/onepager_walk/track2.csv --page examples/onepager_walk/page.md
+      - name: Live walk (real revision ripples through the engine)
+        run: bash examples/live_walk/run.sh

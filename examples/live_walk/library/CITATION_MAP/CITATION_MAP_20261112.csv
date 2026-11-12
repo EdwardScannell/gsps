@@ -1,0 +1,4 @@
+deliverable_id,deliverable_version,anchor_id,anchor_value_version,location,token,value_shown
+DEL-001,v1,LAB-012,v1,P1,T01,"+29,000"
+DEL-001,v1,EST-001,v1,P1,T02,"+81,000"
+DEL-001,v1,FCT-001,v1,P1,T03,"+90,000"
